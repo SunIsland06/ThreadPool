@@ -5,7 +5,6 @@ System::ThreadPool::ThreadPool(uint32_t minThread_ = std::thread::hardware_concu
 : stop(false), minThread(minThread_), maxThread(maxThread_) {
     for(int i = 0; i < minThread; ++i) {
         mainWorker.emplace_back();
-        ++curThread;
     }
 }
 
