@@ -2,8 +2,14 @@
 
 namespace System {
 
-    template<typename Task>
-    bool PriorityTask<Task>::operator < (const PriorityTask& other) {
+    template<typename FuncType>
+    PriorityTask<FuncType>::PriorityTask(FuncType&& func_, uint8_t priority_) 
+    : task(std::move(func_)), priority(priority_), sequence(++counter) {
+
+    }
+
+    template<typename FuncType>
+    bool PriorityTask<FuncType>::operator < (const PriorityTask& other) {
         if(priority == other.priority) [[likely]]{
             return sequence < other.sequence;
         }
@@ -11,5 +17,5 @@ namespace System {
             return priority < other.priority;    
         }
     }
-    
+
 }

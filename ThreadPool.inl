@@ -11,12 +11,14 @@ namespace System {
         using ReturnType = std::invoke_result_t<FuncType>;
 
         // 封装函数
-        std::packaged_task<ReturnType()> task(std::forward(func));
-        std::future<ReturnType> result(task.get_future());
+        std::packaged_task<ReturnType()> packagedTask(std::forward(func));
+        std::future<ReturnType> result(packagedTask.get_future());
 
-        // 
-        mainQueue.emplace(std::move(task), priority);
+        // 推入主任务队列
+        PriorityTask priorityTask(std::move(packagedTask), priority);
+        mainQueue.emplace(std::move(priorityTask));
 
+        return result;
     }
 
 }
