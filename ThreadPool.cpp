@@ -9,5 +9,16 @@ System::ThreadPool::ThreadPool(uint32_t minThread_ = std::thread::hardware_concu
 }
 
 System::ThreadPool::~ThreadPool() {
-    
+    stop = true;
+
+    // 销毁主线程池
+    for(auto it : mainWorker) {
+
+    }
+
+    // 销毁副线程池
+    for(auto it : subWorker) {
+
+    }
+
 }

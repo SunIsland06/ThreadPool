@@ -3,6 +3,8 @@
 #include <atomic>
 #include <vector>
 #include <future>
+
+#include "Task/PriorityTask.hpp"
 #include "Queue/PriorityTaskQueue.hpp"
 #include "Worker/MainWorker.hpp"
 #include "Worker/SubWorker.hpp"
@@ -16,8 +18,8 @@ namespace System {
 
             ~ThreadPool();
 
-            template<typename F, typename ...Args>
-            auto AddTask(F&& f, Args&&... args) -> std::future<std::invoke_result_t<F, Args...>>;
+            template<typename FuncType>
+            auto addTask(FuncType&& func, uint8_t priority) -> std::future<std::invoke_result_t<FuncType>>;
 
         private:
             std::atomic<bool> stop; // 线程池是否关闭
